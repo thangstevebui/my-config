@@ -26,6 +26,7 @@ return {
 				"swift",
 				"regex",
 				"xml",
+				"java",
 			},
 
 			-- matchup = {

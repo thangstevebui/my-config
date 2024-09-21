@@ -40,10 +40,10 @@ key.set("n", "sl", "<C-w>l")
 key.set("n", "<space>", "<C-w>w")
 
 -- Resize window
-key.set("n", "<C-w><left>", "<C-w><")
-key.set("n", "<C-w><right>", "<C-w>>")
-key.set("n", "<C-w><up>", "<C-w>+")
-key.set("n", "<C-w><down>", "<C-w>-")
+key.set("n", "Fh", "<C-w><10", opts)
+key.set("n", "Fl", "<C-w>>10", opts)
+key.set("n", "Fk", "<C-w>+10", opts)
+key.set("n", "Fj", "<C-w>-10", opts)
 
 -- Diagnostics
 key.set("n", "<C-j>", function()

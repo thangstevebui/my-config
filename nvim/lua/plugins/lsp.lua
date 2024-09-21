@@ -31,6 +31,15 @@ return {
 						return require("lspconfig.util").root_pattern(".git")(...)
 					end,
 				},
+				svelte = {
+					cmd = { "svelteserver", "--stdio" },
+					filetypes = { "svelte" },
+					root_dir = function(...)
+						return require("lspconfig.util").root_pattern("package.json", ".git")(...)
+					end,
+					settings = {},
+					single_file_support = true,
+				},
 
 				ruff_lsp = {
 					cmd = { "ruff-lsp" },
@@ -240,10 +249,63 @@ return {
 						},
 					},
 				},
+				setup = {},
 			},
-			setup = {},
+
+			-- config
+			config = function()
+				require("lspconfig").pylsp.setup({
+					settings = {
+						pylsp = {
+							plugins = {
+								pycodestyle = {
+									enabled = true,
+									ignore = { "W391", "E501" },
+									maxLineLength = 100,
+								},
+							},
+						},
+					},
+				})
+			end,
 		},
 
+		{
+			"onsails/lspkind.nvim",
+			config = function()
+				require("lspkind").init({
+					mode = "symbol",
+					preset = "codicons",
+					symbol_map = {
+						Text = "",
+						Method = "",
+						Function = "",
+						Constructor = "",
+						Field = "ﰠ",
+						Variable = "",
+						Class = "ﴯ",
+						Interface = "",
+						Module = "",
+						Property = "ﰠ",
+						Unit = "塞",
+						Value = "",
+						Enum = "",
+						Keyword = "",
+						Snippet = "",
+						Color = "",
+						File = "",
+						Reference = "",
+						Folder = "",
+						EnumMember = "",
+						Constant = "",
+						Struct = "פּ",
+						Event = "",
+						Operator = "",
+						TypeParameter = "",
+					},
+				})
+			end,
+		},
 		{
 			"glepnir/lspsaga.nvim",
 			priority = 1500,
@@ -343,59 +405,5 @@ return {
 				local opts = { noremap = true, silent = true }
 			end,
 		},
-
-		-- config
-		config = function()
-			require("lspconfig").pylsp.setup({
-				settings = {
-					pylsp = {
-						plugins = {
-							pycodestyle = {
-								enabled = true,
-								ignore = { "W391", "E501" },
-								maxLineLength = 100,
-							},
-						},
-					},
-				},
-			})
-		end,
-	},
-
-	{
-		"onsails/lspkind.nvim",
-		config = function()
-			require("lspkind").init({
-				mode = "symbol",
-				preset = "codicons",
-				symbol_map = {
-					Text = "",
-					Method = "",
-					Function = "",
-					Constructor = "",
-					Field = "ﰠ",
-					Variable = "",
-					Class = "ﴯ",
-					Interface = "",
-					Module = "",
-					Property = "ﰠ",
-					Unit = "塞",
-					Value = "",
-					Enum = "",
-					Keyword = "",
-					Snippet = "",
-					Color = "",
-					File = "",
-					Reference = "",
-					Folder = "",
-					EnumMember = "",
-					Constant = "",
-					Struct = "פּ",
-					Event = "",
-					Operator = "",
-					TypeParameter = "",
-				},
-			})
-		end,
 	},
 }

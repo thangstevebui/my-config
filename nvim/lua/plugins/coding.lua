@@ -2,16 +2,59 @@ return {
 	-- Create annotations with one keybind, and jump your cursor in the inserted annotation
 	{
 		"danymat/neogen",
+		cmd = "Neogen",
 		keys = {
 			{
-				"<leader>cc",
+				"<leader>ng",
 				function()
-					require("neogen").generate({})
+					require("neogen").generate()
 				end,
-				desc = "Neogen Comment",
+				desc = "Generate Annotations (Neogen)",
+			},
+			{
+				"<leader>nf",
+				function()
+					require("neogen").generate({ type = "func" })
+				end,
+				desc = "Generate Annotations (Neogen)",
+			},
+			{
+				"<leader>nc",
+				function()
+					require("neogen").generate({ type = "class" })
+				end,
+				desc = "Generate Annotations (Neogen)",
+			},
+			{
+				"<leader>nt",
+				function()
+					require("neogen").generate({ type = "type" })
+				end,
+				desc = "Generate Annotations (Neogen)",
 			},
 		},
-		opts = { snippet_engine = "luasnip" },
+		opts = function(_, opts)
+			if opts.snippet_engine ~= nil then
+				return
+			end
+
+			local map = {
+				["LuaSnip"] = "luasnip",
+				["nvim-snippy"] = "snippy",
+				["vim-vsnip"] = "vsnip",
+			}
+
+			for plugin, engine in pairs(map) do
+				if LazyVim.has(plugin) then
+					opts.snippet_engine = engine
+					return
+				end
+			end
+
+			if vim.snippet then
+				opts.snippet_engine = "nvim"
+			end
+		end,
 	},
 
 	--auto pairs
@@ -147,9 +190,24 @@ return {
 
 	{
 		"nvim-cmp",
-		dependencies = { "hrsh7th/cmp-emoji" },
+		dependencies = {
+			"hrsh7th/cmp-emoji",
+
+			{
+				"Exafunction/codeium.nvim",
+				cmd = "Codeium",
+				build = ":Codeium Auth",
+				opts = {},
+			},
+		},
 		opts = function(_, opts)
 			table.insert(opts.sources, { name = "emoji" })
+
+			table.insert(opts.sources, 1, {
+				name = "codeium",
+				group_index = 1,
+				priority = 100,
+			})
 		end,
 	},
 
@@ -189,13 +247,5 @@ return {
 		"vhyrro/luarocks.nvim",
 		priority = 1000,
 		config = true,
-	},
-	{
-		"rest-nvim/rest.nvim",
-		ft = "http",
-		dependencies = { "luarocks.nvim" },
-		config = function()
-			require("rest-nvim").setup({})
-		end,
 	},
 }
