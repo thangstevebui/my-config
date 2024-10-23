@@ -10,7 +10,6 @@ return {
 				"shellcheck",
 				"shfmt",
 				"tailwindcss-language-server",
-				"typescript-language-server",
 				"css-lsp",
 			})
 		end,
@@ -26,11 +25,7 @@ return {
 			},
 			servers = {
 				cssls = {},
-				tailwindcss = {
-					root_dir = function(...)
-						return require("lspconfig.util").root_pattern(".git")(...)
-					end,
-				},
+				tailwindcss = {},
 				svelte = {
 					cmd = { "svelteserver", "--stdio" },
 					filetypes = { "svelte" },
@@ -40,68 +35,14 @@ return {
 					settings = {},
 					single_file_support = true,
 				},
+				volar = {
+					init_options = {
+						vue = {
+							hybridMode = true,
+						},
+					},
+				},
 
-				ruff_lsp = {
-					cmd = { "ruff-lsp" },
-					filetypes = { "python" },
-					root_dir = function(...)
-						return require("lspconfig.util").root_pattern("requirements.txt", "Pipfile")(...)
-					end,
-					settings = {},
-					single_file_support = true,
-				},
-				pyright = {
-					cmd = { "pyright-langserver", "--stdio" },
-					filetypes = { "python" },
-					settings = {
-						pyright = {
-							-- Using Ruff's import organizer
-							disableOrganizeImports = true,
-						},
-						python = {
-							analysis = {
-								autoSearchPaths = true,
-								diagnosticMode = "openFilesOnly",
-								useLibraryCodeForTypes = true,
-								ignore = { "*" },
-							},
-						},
-					},
-					root_dir = function(...)
-						return require("lspconfig.util").root_pattern(
-							"pyproject.toml",
-							"setup.py",
-							"setup.cfg",
-							"requirements.txt",
-							"Pipfile",
-							"pyrightconfig.json",
-							".git",
-							"main.py",
-							"manage.py"
-						)(...)
-					end,
-					single_file_support = true,
-				},
-				rust_analyzer = {
-					cmd = { "rust-analyzer" },
-					filetypes = { "rust" },
-					root_dir = function(...)
-						return require("lspconfig.util").root_pattern("Cargo.toml", "rust-project.json")(...)
-					end,
-					single_file_support = true,
-					capabilities = {
-						experimental = {
-							serverStatusNotification = true,
-						},
-					},
-					settings = {
-						["rust-analyzer"] = {
-							diagnostics = {
-								enable = true,
-							},
-						},
-					},
-				},
 				sourcekit = {
 					cmd = { "sourcekit-lsp" },
 					filetypes = { "swift", "c", "cpp", "objective-c", "objective-cpp" },
@@ -114,30 +55,7 @@ return {
 						return require("lspconfig.util").root_pattern(".git")(...)
 					end,
 					single_file_support = true,
-					settings = {
-						-- typescript = {
-						-- 	inlayHints = {
-						-- 		includeInlayParameterNameHints = "literal",
-						-- 		includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-						-- 		includeInlayFunctionParameterTypeHints = true,
-						-- 		includeInlayVariableTypeHints = false,
-						-- 		includeInlayPropertyDeclarationTypeHints = true,
-						-- 		includeInlayFunctionLikeReturnTypeHints = true,
-						-- 		includeInlayEnumMemberValueHints = true,
-						-- 	},
-						-- },
-						-- javascript = {
-						-- 	inlayHints = {
-						-- 		includeInlayParameterNameHints = "all",
-						-- 		includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-						-- 		includeInlayFunctionParameterTypeHints = true,
-						-- 		includeInlayVariableTypeHints = true,
-						-- 		includeInlayPropertyDeclarationTypeHints = true,
-						-- 		includeInlayFunctionLikeReturnTypeHints = true,
-						-- 		includeInlayEnumMemberValueHints = true,
-						-- 	},
-						-- },
-					},
+					settings = {},
 				},
 				html = {},
 				yamlls = {
@@ -212,6 +130,7 @@ return {
 						},
 					},
 				},
+
 				dartls = {
 					cmd = { "dart", "language-server", "--protocol=lsp" },
 					filetypes = { "dart" },

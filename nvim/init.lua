@@ -9,25 +9,25 @@ vim.print = _G.dd
 
 require("config.lazy")
 
-require("lspconfig").ruff_lsp.setup({
-	init_options = {
-		settings = {
-			-- Any extra CLI arguments for `ruff` go here.
-			args = {},
-		},
-	},
-})
+-- require("lspconfig").ruff_lsp.setup({
+-- 	init_options = {
+-- 		settings = {
+-- 			-- Any extra CLI arguments for `ruff` go here.
+-- 			args = {},
+-- 		},
+-- 	},
+-- })
+--
+-- local on_attach = function(client, bufnr)
+-- 	if client.name == "ruff_lsp" then
+-- 		-- Disable hover in favor of Pyright
+-- 		client.server_capabilities.hoverProvider = false
+-- 	end
+-- end
 
-local on_attach = function(client, bufnr)
-	if client.name == "ruff_lsp" then
-		-- Disable hover in favor of Pyright
-		client.server_capabilities.hoverProvider = false
-	end
-end
-
-require("lspconfig").ruff_lsp.setup({
-	on_attach = on_attach,
-})
+-- require("lspconfig").ruff_lsp.setup({
+-- 	on_attach = on_attach,
+-- })
 
 require("lspconfig").pyright.setup({
 	settings = {

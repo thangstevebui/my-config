@@ -12,10 +12,10 @@ return {
 	-- 		},
 	-- 	},
 	-- },
-	{
-		"Exafunction/codeium.nvim",
-		cmd = "Codeium",
-		build = ":Codeium Auth",
-		opts = {},
-	},
+	-- {
+	-- 	"Exafunction/codeium.nvim",
+	-- 	cmd = "Codeium",
+	-- 	build = ":Codeium Auth",
+	-- 	opts = {},
+	-- },
 }
