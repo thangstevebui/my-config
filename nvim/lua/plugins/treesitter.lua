@@ -39,6 +39,10 @@ return {
 				use_virtual_text = true,
 				lint_events = { "BufWrite", "CursorHold" },
 			},
+			highlight = {
+				enable = true,
+				additional_vim_regex_highlighting = true,
+			},
 
 			playground = {
 				enable = true,

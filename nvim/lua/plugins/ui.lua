@@ -82,11 +82,11 @@ return {
 	-- statusline
 	{
 		"nvim-lualine/lualine.nvim",
-		event = "VeryLazy",
+		event = "ColorScheme",
 		opts = {
 			options = {
 				globalstatus = false,
-				theme = "solarized_light",
+				theme = "rose-pine",
 			},
 		},
 	},

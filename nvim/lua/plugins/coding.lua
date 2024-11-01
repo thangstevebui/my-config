@@ -114,6 +114,18 @@ return {
 			})
 		end,
 	},
+	{
+		"uga-rosa/ccc.nvim",
+		config = function()
+			require("ccc").setup({})
+		end,
+	},
+	{
+		"sindrets/diffview.nvim",
+		config = function()
+			require("diffview").setup({})
+		end,
+	},
 
 	-- Refactoring tool
 	{
@@ -192,28 +204,16 @@ return {
 		"nvim-cmp",
 		dependencies = {
 			"hrsh7th/cmp-emoji",
-
-			{
-				"Exafunction/codeium.nvim",
-				cmd = "Codeium",
-				build = ":Codeium Auth",
-				opts = {},
-			},
 		},
 		opts = function(_, opts)
 			table.insert(opts.sources, { name = "emoji" })
-
-			table.insert(opts.sources, 1, {
-				name = "codeium",
-				group_index = 1,
-				priority = 100,
-			})
 		end,
 	},
 
 	{
 		"akinsho/toggleterm.nvim",
 		config = function()
+			local highlights = require("rose-pine.plugins.toggleterm")
 			require("toggleterm").setup({
 				open_mapping = [[<c-\>]],
 				hide_numbers = true,
@@ -240,6 +240,7 @@ return {
 						return term.name
 					end,
 				},
+				highlights = highlights,
 			})
 		end,
 	},

@@ -63,20 +63,23 @@ return {
 				highlight_groups = {
 					Comment = { fg = "foam" },
 					VertSplit = { fg = "muted", bg = "muted" },
+					CursorLine = { bg = "gold", blend = 20 },
+					Visual = { bg = "#907aa9", fg = "#fffaf3" },
 				},
 
 				before_highlight = function(group, highlight, palette)
 					-- Disable all undercurls
 					-- if highlight.undercurl then
-					-- 	highlight.undercurl = false
+					-- 	highlight.undercurl = true
 					-- end
 					--
 					-- Change palette colour
 					-- if highlight.fg == palette.pine then
-					-- 	highlight.fg = palette.foam
+					-- 	highlight.fg = palette.gold
 					-- end
 				end,
 			})
+			vim.cmd("colorscheme rose-pine-dawn")
 		end,
 	},
 }
