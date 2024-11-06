@@ -35,13 +35,13 @@ return {
 					settings = {},
 					single_file_support = true,
 				},
-				volar = {
-					init_options = {
-						vue = {
-							hybridMode = true,
-						},
-					},
-				},
+				-- volar = {
+				-- 	init_options = {
+				-- 		vue = {
+				-- 			hybridMode = true,
+				-- 		},
+				-- 	},
+				-- },
 
 				sourcekit = {
 					cmd = { "sourcekit-lsp" },
@@ -50,12 +50,32 @@ return {
 						return require("lspconfig.util").root_pattern("Package.swift", ".git")(...)
 					end,
 				},
+				vtsls = {
+					enabled = false,
+				},
 				tsserver = {
 					root_dir = function(...)
 						return require("lspconfig.util").root_pattern(".git")(...)
 					end,
 					single_file_support = true,
-					settings = {},
+					enable = true,
+					settings = {
+						typescript = {
+							inlayHints = {
+								includeInlayEnumMemberValueHints = true,
+								includeInlayFunctionLikeReturnTypeHints = true,
+								includeInlayFunctionParameterTypeHints = true,
+								includeInlayParameterNameHints = "literals",
+								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+								includeInlayPropertyDeclarationTypeHints = true,
+								includeInlayVariableTypeHints = false,
+								includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+							},
+						},
+						completions = {
+							completeFunctionCalls = true,
+						},
+					},
 				},
 				html = {},
 				yamlls = {
@@ -168,7 +188,14 @@ return {
 						},
 					},
 				},
-				setup = {},
+				setup = {
+					tsserver = function()
+						return false
+					end,
+					vtsls = function()
+						return true
+					end,
+				},
 			},
 
 			-- config

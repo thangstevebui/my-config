@@ -69,14 +69,52 @@ return {
 			{ "<Tab>", "<Cmd>BufferLineCycleNext<CR>", desc = "Next tab" },
 			{ "<S-Tab>", "<Cmd>BufferLineCyclePrev<CR>", desc = "Prev tab" },
 		},
-		opts = {
-			options = {
-				mode = "tabs",
-				-- separator_style = "slant",
-				show_buffer_close_icons = false,
-				show_close_icon = false,
-			},
-		},
+		config = function()
+			local p = require("rose-pine.palette")
+
+			require("bufferline").setup({
+				highlights = {
+					-- fill = {
+					-- 	fg = p.text,
+					-- 	bg = "#575279",
+					-- },
+					buffer_visible = {
+						fg = p.subtle,
+						bg = p.base,
+					},
+					buffer_selected = {
+						fg = p.rose,
+						bold = true,
+						italic = true,
+					},
+					tab_selected = {
+						fg = p.text,
+						bg = p.overlay,
+					},
+				},
+				options = {
+					mode = "tabs",
+					-- separator_style = "slant",
+					show_buffer_close_icons = false,
+					show_close_icon = true,
+					-- termguicolors = true,
+					numbers = "ordinal",
+					diagnostics = "nvim_lsp",
+				},
+			})
+		end,
+		-- opts = {
+		-- 	options = {
+		-- 		mode = "tabs",
+		-- 		show_buffer_close_icons = false,
+		-- 		show_close_icon = true,
+		-- 		show_tab_indicators = true,
+		-- 		termguicolors = true,
+		-- 		themable = true,
+		-- 		numbers = "ordinal",
+		-- 		diagnostics = "nvim_lsp",
+		-- 	},
+		-- },
 	},
 
 	-- statusline
@@ -97,11 +135,11 @@ return {
 		event = "VeryLazy",
 		priority = 1200,
 		config = function()
+			local p = require("rose-pine.palette")
 			require("incline").setup({
 				highlight = {
 					groups = {
-						-- InclineNormal = { guibg = "#FFD0D0", guifg = "#3AA6B9" },
-						-- InclineNormalNC = { guibg = "#C7C8CC", guifg = "#EEEEEE" },
+						InclineNormal = { guibg = p.highlight_med, guifg = p.rose },
 					},
 				},
 				window = { margin = { vertical = 0, horizontal = 1 } },
@@ -117,46 +155,7 @@ return {
 					end
 					local ft_icon, ft_color = devicons.get_icon_color(filename)
 
-					local function get_git_diff()
-						local icons = { removed = "", changed = "", added = "" }
-						local signs = vim.b[props.buf].gitsigns_status_dict
-						local labels = {}
-						if signs == nil then
-							return labels
-						end
-						for name, icon in pairs(icons) do
-							if tonumber(signs[name]) and signs[name] > 0 then
-								table.insert(labels, { icon .. signs[name] .. " ", group = "Diff" .. name })
-							end
-						end
-						if #labels > 0 then
-							table.insert(labels, { "┊ " })
-						end
-						return labels
-					end
-
-					local function get_diagnostic_label()
-						local icons = { error = "❌", warn = "⚡", info = "💩", hint = "💡" }
-						local label = {}
-
-						for severity, icon in pairs(icons) do
-							local n = #vim.diagnostic.get(
-								props.buf,
-								{ severity = vim.diagnostic.severity[string.upper(severity)] }
-							)
-							if n > 0 then
-								table.insert(label, { icon .. n .. " ", group = "DiagnosticSign" .. severity })
-							end
-						end
-						if #label > 0 then
-							table.insert(label, { "┊ " })
-						end
-						return label
-					end
-
 					return {
-						{ get_diagnostic_label() },
-						{ get_git_diff() },
 						{ (ft_icon or "") .. " ", guifg = ft_color, guibg = "none" },
 						{ filename .. " ", gui = vim.bo[props.buf].modified and "bold,italic" or "bold" },
 						{ "┊  " .. vim.api.nvim_win_get_number(props.win), group = "DevIconWindows" },

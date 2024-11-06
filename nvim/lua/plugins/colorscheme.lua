@@ -61,10 +61,14 @@ return {
 				},
 
 				highlight_groups = {
-					Comment = { fg = "foam" },
+					Comment = { fg = "muted" },
 					VertSplit = { fg = "muted", bg = "muted" },
 					CursorLine = { bg = "gold", blend = 20 },
-					Visual = { bg = "#907aa9", fg = "#fffaf3" },
+					Visual = { bg = "#907aa9", fg = "#f6c177" },
+					DiagnosticUnnecessary = { fg = "muted" },
+					String = { fg = "#88C273" },
+					Keyword = { fg = "gold" },
+					Statement = { fg = "#DBA979" },
 				},
 
 				before_highlight = function(group, highlight, palette)
