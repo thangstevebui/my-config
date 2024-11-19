@@ -1,64 +1,29 @@
 return {
-	-- messages, cmdline and the popupmenu
 	{
 		"folke/noice.nvim",
-		opts = function(_, opts)
-			table.insert(opts.routes, {
-				filter = {
-					event = "notify",
-					find = "No information available",
-				},
-				opts = { skip = true },
-			})
-			local focused = true
-			vim.api.nvim_create_autocmd("FocusGained", {
-				callback = function()
-					focused = true
-				end,
-			})
-			vim.api.nvim_create_autocmd("FocusLost", {
-				callback = function()
-					focused = false
-				end,
-			})
-			table.insert(opts.routes, 1, {
-				filter = {
-					cond = function()
-						return not focused
-					end,
-				},
-				view = "notify_send",
-				opts = { stop = false },
-			})
-
-			opts.commands = {
-				all = {
-					-- options for the message history that you get with `:Noice`
-					view = "split",
-					opts = { enter = true, format = "details" },
-					filter = {},
-				},
-			}
-
-			vim.api.nvim_create_autocmd("FileType", {
-				pattern = "markdown",
-				callback = function(event)
-					vim.schedule(function()
-						require("noice.text.markdown").keys(event.buf)
-					end)
-				end,
-			})
-
-			opts.presets.lsp_doc_border = true
-			opts.lsp = {
-				-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+		event = "VeryLazy",
+		opts = {
+			lsp = {
 				override = {
 					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
 					["vim.lsp.util.stylize_markdown"] = true,
-					["cmp.entry.get_documentation"] = true,
+					["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
 				},
-			}
-		end,
+			},
+
+			presets = {
+				bottom_search = true, -- use a classic bottom cmdline for search
+				command_palette = true, -- position the cmdline and popupmenu together
+				long_message_to_split = true, -- long messages will be sent to a split
+				inc_rename = false, -- enables an input dialog for inc-rename.nvim
+				lsp_doc_border = false, -- add a border to hover docs and signature help
+			},
+		},
+		dependencies = {
+			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+			"MunifTanjim/nui.nvim",
+			"rcarriga/nvim-notify",
+		},
 	},
 
 	-- buffer line
@@ -97,24 +62,12 @@ return {
 					-- separator_style = "slant",
 					show_buffer_close_icons = false,
 					show_close_icon = true,
-					-- termguicolors = true,
+					termguicolors = true,
 					numbers = "ordinal",
 					diagnostics = "nvim_lsp",
 				},
 			})
 		end,
-		-- opts = {
-		-- 	options = {
-		-- 		mode = "tabs",
-		-- 		show_buffer_close_icons = false,
-		-- 		show_close_icon = true,
-		-- 		show_tab_indicators = true,
-		-- 		termguicolors = true,
-		-- 		themable = true,
-		-- 		numbers = "ordinal",
-		-- 		diagnostics = "nvim_lsp",
-		-- 	},
-		-- },
 	},
 
 	-- statusline
@@ -232,28 +185,5 @@ return {
 				exclude_groups = {}, -- table: groups you don't want to clear
 			})
 		end,
-	},
-	{
-		"nvimdev/dashboard-nvim",
-		event = "VimEnter",
-		opts = function(_, opts)
-			local logo = [[
-                                                             __,__               z  
-                                                    .--.  .-"     "-.  .--.        z
-████████╗██╗  ██╗ █████╗ ██████╗ ██╗   ██╗██╗      / .. \/  .-. .-.  \/ .. \    z   
-╚══██╔══╝██║  ██║██╔══██╗██╔══██╗██║   ██║██║     | |  '|  /   Y   \  |'  | | z     
-   ██║   ███████║███████║██████╔╝██║   ██║██║     | \   \  \ 0 | 0 /  /   / |       
-   ██║   ██╔══██║██╔══██║██╔══██╗██║   ██║██║      \ '- ,\.-"`` ``"-./, -' /        
-   ██║   ██║  ██║██║  ██║██████╔╝╚██████╔╝██║       `'-' /_   ^ ^   _\ '-'`         
-   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝  ╚═════╝ ╚═╝           |  \._   _./  |             
-               |---------------------|                  \   \ `~` /   /             
-               |  能ある鷹は爪を隠す |                   '._ '-=-' _.'              
-               |---------------------|                      '~---~'                 
-      ]]
-
-			logo = string.rep("\n", 8) .. logo .. "\n\n"
-			opts.config.header = vim.split(logo, "\n")
-		end,
-		dependencies = { { "nvim-tree/nvim-web-devicons" } },
 	},
 }

@@ -1,5 +1,15 @@
 return {
 	-- Create annotations with one keybind, and jump your cursor in the inserted annotation
+	-- {
+	-- 	"nvzone/volt",
+	-- 	{ "nvzone/timerly", cmd = "TimerlyToggle" },
+	-- 	opts = {
+	-- 		on_finish = function()
+	-- 			vim.cmd("silent !doas rtcwake -s 300 -m mem")
+	-- 		end,
+	-- 	},
+	-- },
+
 	{
 		"danymat/neogen",
 		cmd = "Neogen",
@@ -59,23 +69,23 @@ return {
 
 	--auto pairs
 	{ "echasnovski/mini.nvim", version = "*" },
-	{
-		"echasnovski/mini.icons",
-		version = "*",
-		opts = {
-			style = "glyph",
-		},
-		lazy = true,
-		specs = {
-			{ "nvim-tree/nvim-web-devicons", enabled = false, optional = true },
-		},
-		init = function()
-			package.preload["nvim-web-devicons"] = function()
-				require("mini.icons").mock_nvim_web_devicons()
-				return package.loaded["nvim-web-devicons"]
-			end
-		end,
-	},
+	-- {
+	-- 	"echasnovski/mini.icons",
+	-- 	version = "*",
+	-- 	opts = {
+	-- 		style = "glyph",
+	-- 	},
+	-- 	lazy = true,
+	-- 	specs = {
+	-- 		{ "nvim-tree/nvim-web-devicons", enabled = false, optional = true },
+	-- 	},
+	-- 	init = function()
+	-- 		package.preload["nvim-web-devicons"] = function()
+	-- 			require("mini.icons").mock_nvim_web_devicons()
+	-- 			return package.loaded["nvim-web-devicons"]
+	-- 		end
+	-- 	end,
+	-- },
 
 	{
 		"windwp/nvim-autopairs",
@@ -96,13 +106,6 @@ return {
 			},
 		}, -- this is equalent to setup({}) function
 	},
-	-- {
-	-- 	"ZhiyuanLck/smart-pairs",
-	-- 	event = "InsertEnter",
-	-- 	config = function()
-	-- 		require("pairs"):setup()
-	-- 	end,
-	-- },
 
 	-- Incremental rename
 	{
@@ -204,9 +207,30 @@ return {
 		"nvim-cmp",
 		dependencies = {
 			"hrsh7th/cmp-emoji",
+			{
+				"garymjr/nvim-snippets",
+				opts = {
+					friendly_snippets = true,
+				},
+				dependencies = { "rafamadriz/friendly-snippets" },
+			},
+			"codeium.nvim",
 		},
 		opts = function(_, opts)
 			table.insert(opts.sources, { name = "emoji" })
+			opts.snippet = {
+				expand = function(item)
+					return LazyVim.cmp.expand(item.body)
+				end,
+			}
+			if LazyVim.has("nvim-snippets") then
+				table.insert(opts.sources, { name = "snippets" })
+			end
+			table.insert(opts.sources, 1, {
+				name = "codeium",
+				group_index = 1,
+				priority = 100,
+			})
 		end,
 	},
 

@@ -65,10 +65,17 @@ return {
 					VertSplit = { fg = "muted", bg = "muted" },
 					CursorLine = { bg = "gold", blend = 20 },
 					Visual = { bg = "#907aa9", fg = "#f6c177" },
-					DiagnosticUnnecessary = { fg = "muted" },
+					DiagnosticUnnecessary = { bg = "#ea9a97", fg = "muted", blend = 20 },
 					String = { fg = "#88C273" },
 					Keyword = { fg = "gold" },
 					Statement = { fg = "#DBA979" },
+				},
+				highlight = {
+					SpellBad = {
+						fg = "rose",
+						bg = "muted",
+						blend = 20,
+					},
 				},
 
 				before_highlight = function(group, highlight, palette)

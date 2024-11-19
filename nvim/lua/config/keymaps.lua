@@ -16,6 +16,9 @@ key.set("n", "dw", 'vb"_d')
 -- Save with root permission (not working for now)
 --vim.api.nvim_create_user_command('W', 'w !sudo tee > /dev/null %', {})
 
+--Timerly
+key.set("n", "<Leader>t", ":TimerlyToggle<Return>", opts)
+
 -- Disable continuations
 key.set("n", "<Leader>o", "o<Esc>^Da", opts)
 key.set("n", "<Leader>O", "O<Esc>^Da", opts)

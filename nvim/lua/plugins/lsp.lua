@@ -35,13 +35,6 @@ return {
 					settings = {},
 					single_file_support = true,
 				},
-				-- volar = {
-				-- 	init_options = {
-				-- 		vue = {
-				-- 			hybridMode = true,
-				-- 		},
-				-- 	},
-				-- },
 
 				sourcekit = {
 					cmd = { "sourcekit-lsp" },
@@ -188,16 +181,16 @@ return {
 						},
 					},
 				},
-				setup = {
-					tsserver = function()
-						return false
-					end,
-					vtsls = function()
-						return true
-					end,
-				},
 			},
 
+			setup = {
+				tsserver = function()
+					return false
+				end,
+				vtsls = function()
+					return true
+				end,
+			},
 			-- config
 			config = function()
 				require("lspconfig").pylsp.setup({
@@ -253,7 +246,7 @@ return {
 			end,
 		},
 		{
-			"glepnir/lspsaga.nvim",
+			"nvimdev/lspsaga.nvim",
 			priority = 1500,
 			dependencies = {
 				{ "nvim-treesitter/nvim-treesitter" },
@@ -279,11 +272,8 @@ return {
 			config = function()
 				require("lspsaga").setup({
 					ui = {
-						--   -- Currently, only the round theme exists
 						theme = "round",
-						--   -- This option only works in Neovim 0.9
 						title = true,
-						--   -- Border type can be single, double, rounded, solid, shadow.
 						border = "rounded",
 						lines = { "┗", "┣", "┃", "━", "┏" },
 						winblend = 1,
