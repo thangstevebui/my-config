@@ -291,4 +291,18 @@ return {
       require("telescope").load_extension("file_browser")
     end,
   },
+  {
+    "nvzone/showkeys",
+    config = function()
+      require("showkeys").setup({
+        position = "bottom-center",
+        timeout = 1,
+        max_keys = 6,
+        show_count = true,
+        exclued_modes = {},
+      })
+
+      vim.cmd("ShowkeysToggle")
+    end,
+  },
 }
