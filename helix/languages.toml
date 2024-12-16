@@ -1,0 +1,156 @@
+#LUA
+[[language]]
+name = "lua"
+auto-format = true
+language-servers = ["lua-language-server"]
+
+#AI
+# [language-server.gpt]
+# command = "bun"
+# args = ["run", "/Users/apple/gpt/helix-gpt-0.34.js --handler"]
+
+[language-server.gpt]
+command = "helix-gpt"
+args = [
+  "--handler",
+  "codeium",
+  "--codeiumApiKey",
+  "eyJhbGciOiJSUzI1NiIsImtpZCI6ImJkMGFlMTRkMjhkMTY1NzhiMzFjOGJlNmM4ZmRlZDM0ZDVlMWExYzEiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiVGhhbmcgQnVpIEhvbmciLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVdlbl83azVtUXVhQTlNQ2tWT3JvQUFNYU5ibHNNeENYZFN2TmlpX2lYaE5SbnhnPXM5Ni1jIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL2V4YTItZmIxNzAiLCJhdWQiOiJleGEyLWZiMTcwIiwiYXV0aF90aW1lIjoxNzMxNjYxNTU2LCJ1c2VyX2lkIjoiak1xeWV6YUI4ZmV2NXF0VUZvbnJnVmx6amIxMiIsInN1YiI6ImpNcXllemFCOGZldjVxdFVGb25yZ1ZsempiMTIiLCJpYXQiOjE3MzQwNzE3NzMsImV4cCI6MTczNDA3NTM3MywiZW1haWwiOiJidWkudGhhbmdAdm4ubGlvbi1nYXJkZW4uY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZ29vZ2xlLmNvbSI6WyIxMDI2NjY1NDU5NzA4ODY5NTQ4MDQiXSwiZW1haWwiOlsiYnVpLnRoYW5nQHZuLmxpb24tZ2FyZGVuLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6Imdvb2dsZS5jb20ifX0.CQ6UdGVbN9KyCGJsAYvTSeqS2B8mvKHtutAYLRHKeBDaOsYDWDZQ9h8wT-Uc_U6OVqPAkw5gKN1YhcRFOIoEcQhqKZ0k4Df8pwTtZsgywRSJELxxgwxMY73m8MeXN_nKkfglTX99IdGjlxpTrQlllWOMF8EjbesyoLRSWY9fmtGTzvzb4ohtN2ktWG5PoBRLbLGxs54LwLHTSSloM8ljNOmJg5SClQHxFSOYhixUKMV16lLvV8-rgsJhtfByd1_XWOI078TUu3JDVQtylEfwMzSEIHjq0iZAtM0d-A44_qVPLhlfZsVpn2txaag9i2W-MfO8kMifYtixKmiIfELc3A",
+]
+
+#TOML
+[[language]]
+name = "toml"
+formatter = { command = "taplo", args = ["fmt", "-"] }
+auto-format = true
+
+#YAML
+[language-server.yaml-language-server.config.yaml]
+format = { enable = true }
+auto-format = true
+validation = true
+
+[language-server.yaml-language-server.config.yaml.schemas]
+"https://json.schemastore.org/github-workflow.json" = ".github/workflows/*.{yml,yaml}"
+"https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json" = "roles/{tasks,handlers}/*.{yml,yaml}"
+
+#JAVASCRIPT
+[[language]]
+name = "javascript"
+language-servers = [
+  "typescript-language-server",    # optional
+  "vscode-eslint-language-server",
+  "gpt",
+]
+auto-format = true
+
+#TYPESCRIPT
+[[language]]
+name = "typescript"
+language-servers = [
+  "typescript-language-server",
+  "vscode-eslint-language-server",
+  "gpt",
+]
+auto-format = true
+
+
+#PYTHON
+[[language]]
+name = "python"
+auto-format = true
+formatter = { command = "ruff", args = ["format", "--line-length", "80", "-"] }
+language-servers = ["pyright", "ruff", "gpt"]
+scope = "source.python"
+# indent = { tab-width = 4, unit = " " }
+# roots = ["pyproject.toml", "pyrightconfig.json", "Poetry.lock"]
+
+[language-server.pyright.config.python.analysis]
+typeCheckingMode = "basic"
+
+[language-server.ruff.config.settings]
+args = ["--ignore", "E501"]
+[language-server.ruff]
+command = "ruff"
+args = ["server"]
+
+#RUST
+[language-server.rust-analyzer.config.check]
+auto-format = true
+command = "clippy"
+
+#TERRAFORM
+[[language]]
+name = "hcl"
+auto-format = true
+language-servers = ["terraform-ls", "gpt"]
+language-id = "terraform"
+
+[[language]]
+name = "tfvars"
+language-servers = ["terraform-ls", "gpt"]
+language-id = "terraform-vars"
+
+[language-server.terraform-ls]
+command = "terraform-ls"
+args = ["serve"]
+
+#TAILWIND
+[[language]]
+name = "html"
+language-servers = ["vscode-html-language-server", "tailwindcss-ls"]
+auto-format = true
+
+[[language]]
+name = "css"
+language-servers = ["vscode-css-language-server", "tailwindcss-ls"]
+
+[[language]]
+name = "jsx"
+language-servers = ["typescript-language-server", "tailwindcss-ls"]
+
+[[language]]
+name = "tsx"
+language-servers = ["typescript-language-server", "tailwindcss-ls"]
+
+[[language]]
+name = "svelte"
+language-servers = ["svelteserver", "tailwindcss-ls"]
+
+#SQL
+[language-server.sql-language-server]
+command = "sql-language-server"
+args = ["up", "--method", "stdio"]
+auto-format = true
+
+[[language]]
+name = "sql"
+language-servers = ["sql-language-server", "gpt"]
+
+#MARKDOWN
+[[language]]
+name = "markdown"
+auto-format = true
+language-servers = ["marksman", "ltex-ls", "gpt"]
+
+#GO
+[[language]]
+name = "go"
+language-servers = ["gopls", "gpt"]
+auto-format = true
+formatter = { command = "goimports" }
+
+# [language-server.gopls.config]
+# gofumpt = true
+
+#VUE
+[[language]]
+name = "vue"
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "vue"] }
+language-servers = ["typescript-language-server", "gpt"]
+
+[[language-server.typescript-language-server.config.plugins]]
+name = "@vue/typescript-plugin"
+location = "/Users/apple/.nvm/versions/node/v20.15.0/lib/node_modules/@vue/language-server/"
+languages = ["vue"]

@@ -1,3 +1,7 @@
+-- Keymaps are automatically loaded on the VeryLazy event
+-- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
+-- Add any additional keymaps here
+
 local key = vim.keymap
 local opts = { noremap = true, silent = true }
 
@@ -10,15 +14,6 @@ key.set("n", "-", "<C-x>")
 -- Delete a word backwards
 key.set("n", "dw", 'vb"_d')
 
--- Select all
--- keymap.set("n", "<C-a>", "gg<S-v>G")
-
--- Save with root permission (not working for now)
---vim.api.nvim_create_user_command('W', 'w !sudo tee > /dev/null %', {})
-
---Timerly
-key.set("n", "<Leader>t", ":TimerlyToggle<Return>", opts)
-
 -- Disable continuations
 key.set("n", "<Leader>o", "o<Esc>^Da", opts)
 key.set("n", "<Leader>O", "O<Esc>^Da", opts)
@@ -30,6 +25,7 @@ key.set("n", "<C-m>", "<C-i>", opts)
 key.set("n", "te", ":tabedit<Return>")
 key.set("n", "<tab>", ":tabnext<Return>", opts)
 key.set("n", "<s-tab>", ":tabprev<Return>", opts)
+key.set("n", "tq", ":tabclose<Return>", opts)
 -- Split window
 key.set("n", "ss", ":split<Return>", opts)
 key.set("n", "sv", ":vsplit<Return>", opts)
@@ -50,5 +46,5 @@ key.set("n", "Fj", "<C-w>-10", opts)
 
 -- Diagnostics
 key.set("n", "<C-j>", function()
-	vim.diagnostic.goto_next()
+  vim.diagnostic.goto_next()
 end, opts)

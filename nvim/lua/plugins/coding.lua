@@ -1,276 +1,288 @@
 return {
-	-- Create annotations with one keybind, and jump your cursor in the inserted annotation
-	-- {
-	-- 	"nvzone/volt",
-	-- 	{ "nvzone/timerly", cmd = "TimerlyToggle" },
-	-- 	opts = {
-	-- 		on_finish = function()
-	-- 			vim.cmd("silent !doas rtcwake -s 300 -m mem")
-	-- 		end,
-	-- 	},
-	-- },
+  {
+    "uga-rosa/ccc.nvim",
+    config = function()
+      require("ccc").setup({})
+    end,
+  },
+  {
+    "sindrets/diffview.nvim",
+    config = function()
+      require("diffview").setup({})
+    end,
+  },
 
-	{
-		"danymat/neogen",
-		cmd = "Neogen",
-		keys = {
-			{
-				"<leader>ng",
-				function()
-					require("neogen").generate()
-				end,
-				desc = "Generate Annotations (Neogen)",
-			},
-			{
-				"<leader>nf",
-				function()
-					require("neogen").generate({ type = "func" })
-				end,
-				desc = "Generate Annotations (Neogen)",
-			},
-			{
-				"<leader>nc",
-				function()
-					require("neogen").generate({ type = "class" })
-				end,
-				desc = "Generate Annotations (Neogen)",
-			},
-			{
-				"<leader>nt",
-				function()
-					require("neogen").generate({ type = "type" })
-				end,
-				desc = "Generate Annotations (Neogen)",
-			},
-		},
-		opts = function(_, opts)
-			if opts.snippet_engine ~= nil then
-				return
-			end
+  {
+    "vhyrro/luarocks.nvim",
+    priority = 1000, -- Very high priority is required, luarocks.nvim should run as the first plugin in your config.
+    config = true,
+  },
+  -- Refactoring tool
+  {
+    "ThePrimeagen/refactoring.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+      require("refactoring").setup({
+        prompt_func_return_type = {
+          go = false,
+          java = false,
 
-			local map = {
-				["LuaSnip"] = "luasnip",
-				["nvim-snippy"] = "snippy",
-				["vim-vsnip"] = "vsnip",
-			}
+          cpp = false,
+          c = false,
+          h = false,
+          hpp = false,
+          cxx = false,
 
-			for plugin, engine in pairs(map) do
-				if LazyVim.has(plugin) then
-					opts.snippet_engine = engine
-					return
-				end
-			end
+          --Enable
+          python = true,
+        },
+        prompt_func_param_type = {
+          go = false,
+          java = false,
 
-			if vim.snippet then
-				opts.snippet_engine = "nvim"
-			end
-		end,
-	},
+          cpp = false,
+          c = false,
+          h = false,
+          hpp = false,
+          cxx = false,
 
-	--auto pairs
-	{ "echasnovski/mini.nvim", version = "*" },
-	-- {
-	-- 	"echasnovski/mini.icons",
-	-- 	version = "*",
-	-- 	opts = {
-	-- 		style = "glyph",
-	-- 	},
-	-- 	lazy = true,
-	-- 	specs = {
-	-- 		{ "nvim-tree/nvim-web-devicons", enabled = false, optional = true },
-	-- 	},
-	-- 	init = function()
-	-- 		package.preload["nvim-web-devicons"] = function()
-	-- 			require("mini.icons").mock_nvim_web_devicons()
-	-- 			return package.loaded["nvim-web-devicons"]
-	-- 		end
-	-- 	end,
-	-- },
-
-	{
-		"windwp/nvim-autopairs",
-		event = "InsertEnter",
-		opts = {
-			fast_wrap = {
-				map = "<M-e>",
-				chars = { "{", "[", "(", '"', "'" },
-				pattern = [=[[%'%"%>%]%)%}%,]]=],
-				end_key = "$",
-				before_key = "h",
-				after_key = "l",
-				cursor_pos_before = true,
-				keys = "qwertyuiopzxcvbnmasdfghjkl",
-				manual_position = true,
-				highlight = "Search",
-				highlight_grey = "Comment",
-			},
-		}, -- this is equalent to setup({}) function
-	},
-
-	-- Incremental rename
-	{
-		"smjonas/inc-rename.nvim",
-		config = function()
-			require("inc_rename").setup({
-				input_buffer_type = "dressing",
-				vim.keymap.set("n", "<leader>rn", ":IncRename "),
-			})
-		end,
-	},
-	{
-		"uga-rosa/ccc.nvim",
-		config = function()
-			require("ccc").setup({})
-		end,
-	},
-	{
-		"sindrets/diffview.nvim",
-		config = function()
-			require("diffview").setup({})
-		end,
-	},
-
-	-- Refactoring tool
-	{
-		"ThePrimeagen/refactoring.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-treesitter/nvim-treesitter",
-		},
-		config = function()
-			require("refactoring").setup()
-		end,
-		keys = {
-			{
-				"<leader>r",
-				function()
-					require("refactoring").select_refactor()
-				end,
-				mode = "v",
-				noremap = true,
-				silent = true,
-				expr = false,
-			},
-		},
-		opts = {},
-	},
-
-	-- Go forward/backward with square brackets
-	{
-		"echasnovski/mini.bracketed",
-		event = "BufReadPost",
-		config = function()
-			local bracketed = require("mini.bracketed")
-			bracketed.setup({
-				file = { suffix = "" },
-				window = { suffix = "" },
-				quickfix = { suffix = "" },
-				yank = { suffix = "" },
-				treesitter = { suffix = "n" },
-			})
-		end,
-	},
-
-	-- Better increase/descrease
-	{
-		"monaqa/dial.nvim",
+          --Enable
+          python = true,
+        },
+        puintf_statements = {},
+        print_var_statements = {},
+        show_success_message = false,
+      })
+    end,
+    keys = {
+      {
+        "<leader>r",
+        function()
+          require("refactoring").select_refactor({})
+        end,
+        mode = "v",
+        noremap = true,
+        silent = true,
+        expr = false,
+      },
+    },
+    opts = {},
+  },
+  -- Better increase/descrease
+  {
+    "monaqa/dial.nvim",
     -- stylua: ignore
     keys = {
       { "<C-a>", function() return require("dial.map").inc_normal() end, expr = true, desc = "Increment" },
       { "<C-x>", function() return require("dial.map").dec_normal() end, expr = true, desc = "Decrement" },
     },
-		config = function()
-			local augend = require("dial.augend")
-			require("dial.config").augends:register_group({
-				default = {
-					augend.integer.alias.decimal,
-					augend.integer.alias.hex,
-					augend.date.alias["%Y/%m/%d"],
-					augend.constant.alias.bool,
-					augend.semver.alias.semver,
-					augend.constant.new({ elements = { "let", "const" } }),
-				},
-			})
-		end,
-	},
+    opts = function()
+      local augend = require("dial.augend")
+      require("dial.config").augends:register_group({
+        default = {
+          augend.integer.alias.decimal,
+          augend.integer.alias.hex,
+          augend.date.alias["%Y/%m/%d"],
+          augend.constant.alias.bool,
+          augend.semver.alias.semver,
+          augend.constant.new({ elements = { "let", "const" } }),
+        },
+      })
 
-	{
-		"simrat39/symbols-outline.nvim",
-		keys = { { "<leader>cs", "<cmd>SymbolsOutline<cr>", desc = "Symbols Outline" } },
-		cmd = "SymbolsOutline",
-		opts = {
-			position = "right",
-		},
-	},
+      local logical_alias = augend.constant.new({
+        elements = { "&&", "||" },
+        word = false,
+        cyclic = true,
+      })
 
-	{
-		"nvim-cmp",
-		dependencies = {
-			"hrsh7th/cmp-emoji",
-			{
-				"garymjr/nvim-snippets",
-				opts = {
-					friendly_snippets = true,
-				},
-				dependencies = { "rafamadriz/friendly-snippets" },
-			},
-			"codeium.nvim",
-		},
-		opts = function(_, opts)
-			table.insert(opts.sources, { name = "emoji" })
-			opts.snippet = {
-				expand = function(item)
-					return LazyVim.cmp.expand(item.body)
-				end,
-			}
-			if LazyVim.has("nvim-snippets") then
-				table.insert(opts.sources, { name = "snippets" })
-			end
-			table.insert(opts.sources, 1, {
-				name = "codeium",
-				group_index = 1,
-				priority = 100,
-			})
-		end,
-	},
+      local ordinal_numbers = augend.constant.new({
+        -- elements through which we cycle. When we increment, we go down
+        -- On decrement we go up
+        elements = {
+          "first",
+          "second",
+          "third",
+          "fourth",
+          "fifth",
+          "sixth",
+          "seventh",
+          "eighth",
+          "ninth",
+          "tenth",
+        },
+        -- if true, it only matches strings with word boundary. firstDate wouldn't work for example
+        word = false,
+        -- do we cycle back and forth (tenth to first on increment, first to tenth on decrement).
+        -- Otherwise nothing will happen when there are no further values
+        cyclic = true,
+      })
 
-	{
-		"akinsho/toggleterm.nvim",
-		config = function()
-			local highlights = require("rose-pine.plugins.toggleterm")
-			require("toggleterm").setup({
-				open_mapping = [[<c-\>]],
-				hide_numbers = true,
-				size = 20,
-				shade_filetypes = {},
-				direction = "float",
-				shade_terminals = true,
-				shading_factor = 2,
-				start_in_insert = true,
-				terminal_mappings = true,
-				persist_size = true,
-				close_on_exit = true,
-				shell = vim.o.shell,
-				auto_scroll = true,
-				float_otps = {
-					border = "curved",
-					winblend = 2,
-					width = 1,
-					height = 1,
-				},
-				winbar = {
-					enable = false,
-					name_formatter = function(term)
-						return term.name
-					end,
-				},
-				highlights = highlights,
-			})
-		end,
-	},
-	{
-		"vhyrro/luarocks.nvim",
-		priority = 1000,
-		config = true,
-	},
+      local weekdays = augend.constant.new({
+        elements = {
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+        },
+        word = true,
+        cyclic = true,
+      })
+
+      local months = augend.constant.new({
+        elements = {
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        },
+        word = true,
+        cyclic = true,
+      })
+
+      local capitalized_boolean = augend.constant.new({
+        elements = {
+          "True",
+          "False",
+        },
+        word = true,
+        cyclic = true,
+      })
+
+      return {
+        dials_by_ft = {
+          css = "css",
+          vue = "vue",
+          javascript = "typescript",
+          typescript = "typescript",
+          typescriptreact = "typescript",
+          javascriptreact = "typescript",
+          json = "json",
+          lua = "lua",
+          markdown = "markdown",
+          sass = "css",
+          scss = "css",
+          python = "python",
+        },
+        groups = {
+          default = {
+            augend.integer.alias.decimal, -- nonnegative decimal number (0, 1, 2, 3, ...)
+            augend.integer.alias.decimal_int, -- nonnegative and negative decimal number
+            augend.integer.alias.hex, -- nonnegative hex number  (0x01, 0x1a1f, etc.)
+            augend.date.alias["%Y/%m/%d"], -- date (2022/02/19, etc.)
+            ordinal_numbers,
+            weekdays,
+            months,
+            capitalized_boolean,
+            augend.constant.alias.bool, -- boolean value (true <-> false)
+            logical_alias,
+          },
+          vue = {
+            augend.constant.new({ elements = { "let", "const" } }),
+            augend.hexcolor.new({ case = "lower" }),
+            augend.hexcolor.new({ case = "upper" }),
+          },
+          typescript = {
+            augend.constant.new({ elements = { "let", "const" } }),
+          },
+          css = {
+            augend.hexcolor.new({
+              case = "lower",
+            }),
+            augend.hexcolor.new({
+              case = "upper",
+            }),
+          },
+          markdown = {
+            augend.misc.alias.markdown_header,
+          },
+          json = {
+            augend.semver.alias.semver, -- versioning (v1.1.2)
+          },
+          lua = {
+            augend.constant.new({
+              elements = { "and", "or" },
+              word = true, -- if false, "sand" is incremented into "sor", "doctor" into "doctand", etc.
+              cyclic = true, -- "or" is incremented into "and".
+            }),
+          },
+          python = {
+            augend.constant.new({
+              elements = { "and", "or" },
+            }),
+          },
+        },
+      }
+    end,
+  },
+  {
+    "simrat39/symbols-outline.nvim",
+    keys = { { "<leader>cs", "<cmd>SymbolsOutline<cr>", desc = "Symbols Outline" } },
+    cmd = "SymbolsOutline",
+    opts = {
+      position = "right",
+    },
+  },
+  {
+    "akinsho/toggleterm.nvim",
+    config = function()
+      local highlights = require("rose-pine.plugins.toggleterm")
+      require("toggleterm").setup({
+        open_mapping = [[<c-\>]],
+        hide_numbers = true,
+        size = 20,
+        shade_filetypes = {},
+        direction = "float",
+        shade_terminals = true,
+        shading_factor = 2,
+        start_in_insert = true,
+        terminal_mappings = true,
+        persist_size = true,
+        close_on_exit = true,
+        shell = vim.o.shell,
+        auto_scroll = true,
+        float_otps = {
+          border = "curved",
+          winblend = 2,
+          width = 1,
+          height = 1,
+        },
+        winbar = {
+          enable = false,
+          name_formatter = function(term)
+            return term.name
+          end,
+        },
+        highlights = highlights,
+      })
+    end,
+  },
+  {
+    "mistricky/codesnap.nvim",
+    build = "make",
+    keys = {
+      { "<leader>cc", "<cmd>CodeSnap<cr>", mode = "x", desc = "Save selected code snapshot into clipboard" },
+      { "<leader>cs", "<cmd>CodeSnapSave<cr>", mode = "x", desc = "Save selected code snapshot in ~/Pictures" },
+    },
+    opts = {
+      save_path = "~/Pictures",
+      has_breadcrumbs = true,
+      bg_theme = "summer",
+      watermark = "THA",
+      show_workspace = true,
+    },
+  },
 }

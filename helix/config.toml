@@ -1,0 +1,124 @@
+theme = "rose_pine_moon"
+
+[editor]
+line-number = "relative"
+mouse = false
+cursorline = true
+# cursorcolumn =true
+bufferline = "always"
+auto-format = true
+color-modes = true
+true-color = true
+
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+
+[editor.file-picker]
+hidden = false
+
+
+[editor.whitespace.render]
+space = "all"
+tab = "all"
+newline = "none"
+
+[editor.indent-guides]
+render = true
+character = "╎" # Some characters that work well: "▏", "┆", "┊", "⸽"
+skip-levels = 1
+
+
+[editor.whitespace.characters]
+space = "·"
+tab = "╎"
+
+[editor.statusline]
+left = ["mode", "spinner", "diagnostics", "selections"]
+center = [
+  "file-name",
+  "file-encoding",
+  "separator",
+  "version-control",
+  "separator",
+]
+right = ["position", "position-percentage", "total-line-numbers"]
+separator = "│"
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+[keys.normal]
+X = "select_line_above"
+V = ["goto_line_start", "select_mode", "goto_line_end"]
+F = [":format"]
+
+#Movement
+w = ["move_next_word_start", "collapse_selection"]
+b = ["move_prev_word_start", "collapse_selection"]
+e = ["move_next_word_end", "collapse_selection"]
+W = ["move_next_long_word_start", "collapse_selection"]
+B = ["move_prev_long_word_start", "collapse_selection"]
+E = ["move_next_long_word_end", "collapse_selection"]
+
+C-r = ["redo"]
+
+tab = "goto_next_buffer"
+S-tab = "goto_previous_buffer"
+C-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]
+C-k = [
+  "extend_to_line_bounds",
+  "delete_selection",
+  "move_line_up",
+  "paste_before",
+]
+"@" = ["move_prev_word_start", "move_next_word_end", "search_selection"]
+
+[keys.normal.d]
+d = ["extend_to_line_bounds", "delete_selection"]
+
+[keys.normal.y]
+y = ["extend_line", "yank_to_clipboard", "yank", "normal_mode"]
+
+[keys.normal.g]
+a = "code_action"
+
+[keys.normal.t]
+a = ":bcloseall"
+q = ":bclose"
+
+[keys.normal.z]
+k = [
+  "scroll_up",
+  "scroll_up",
+  "scroll_up",
+  "scroll_up",
+  "scroll_up",
+  "scroll_up",
+  "scroll_up",
+  "scroll_up",
+  "scroll_up",
+  "scroll_up",
+]
+j = [
+  "scroll_down",
+  "scroll_down",
+  "scroll_down",
+  "scroll_down",
+  "scroll_down",
+  "scroll_down",
+  "scroll_down",
+  "scroll_down",
+  "scroll_down",
+  "scroll_down",
+]
+
+
+[keys.select]
+y = ["yank_to_clipboard", "yank"]
+
+u = ["switch_to_lowercase"]
+U = ["switch_to_uppercase"]
