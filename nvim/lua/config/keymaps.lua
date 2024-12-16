@@ -14,10 +14,6 @@ key.set("n", "-", "<C-x>")
 -- Delete a word backwards
 key.set("n", "dw", 'vb"_d')
 
--- Disable continuations
-key.set("n", "<Leader>o", "o<Esc>^Da", opts)
-key.set("n", "<Leader>O", "O<Esc>^Da", opts)
-
 -- Jumplist
 key.set("n", "<C-m>", "<C-i>", opts)
 
@@ -43,8 +39,3 @@ key.set("n", "Fh", "<C-w><10", opts)
 key.set("n", "Fl", "<C-w>>10", opts)
 key.set("n", "Fk", "<C-w>+10", opts)
 key.set("n", "Fj", "<C-w>-10", opts)
-
--- Diagnostics
-key.set("n", "<C-j>", function()
-  vim.diagnostic.goto_next()
-end, opts)
